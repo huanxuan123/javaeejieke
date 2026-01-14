@@ -8,6 +8,9 @@
     <title>图书管理系统 - 登录</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/common.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var contextPath = '${pageContext.request.contextPath}';
+    </script>
     <script src="${pageContext.request.contextPath}/static/js/common.js"></script>
     <script>
         $(document).ready(function() {
