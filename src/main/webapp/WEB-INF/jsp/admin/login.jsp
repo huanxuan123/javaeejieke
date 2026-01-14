@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library Management System - Login</title>
+    <title>图书管理系统 - 登录</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/common.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/common.js"></script>
@@ -29,7 +29,7 @@
                     data: formData,
                     success: function(response) {
                         if (response === 'success') {
-                            showMessage('Login successful! Redirecting...', 'success');
+                            showMessage('登录成功！正在跳转...', 'success');
                             setTimeout(function() {
                                 window.location.href = contextPath + '/';
                             }, 1000);
@@ -38,7 +38,7 @@
                         }
                     },
                     error: function(xhr, status, error) {
-                        showMessage('Network error: ' + error, 'error');
+                        showMessage('网络错误：' + error, 'error');
                     }
                 });
             });
@@ -117,20 +117,20 @@
 <body>
     <div class="alert-container"></div>
     <div class="login-container">
-        <h2>Library Management System</h2>
+        <h2>图书管理系统</h2>
         <c:if test="${not empty error}">
             <div class="alert alert-danger">${error}</div>
         </c:if>
         <form id="loginForm" action="${pageContext.request.contextPath}/admin/login" method="post">
             <div class="form-group">
-                <label for="username">Username:</label>
+                <label for="username">用户名：</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="password">Password:</label>
+                <label for="password">密码：</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn">Login</button>
+            <button type="submit" class="btn">登录</button>
         </form>
     </div>
 </body>

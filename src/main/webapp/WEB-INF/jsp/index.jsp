@@ -82,25 +82,25 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Library Management System</h1>
+            <h1>图书管理系统</h1>
             <div class="user-info">
-                <span>Welcome, ${sessionScope.admin.name}</span>
-                <a href="${pageContext.request.contextPath}/admin/logout" class="logout-btn">Logout</a>
+                <span>欢迎，${sessionScope.admin.name}</span>
+                <a href="${pageContext.request.contextPath}/admin/logout" class="logout-btn">退出登录</a>
             </div>
         </div>
         
         <div class="menu">
             <a href="${pageContext.request.contextPath}/book/list" class="menu-item">
-                <h3>Book Management</h3>
-                <p>Manage books, add new books, update book information</p>
+                <h3>图书管理</h3>
+                <p>管理图书，添加新书，更新图书信息</p>
             </a>
             <a href="${pageContext.request.contextPath}/reader/list" class="menu-item">
-                <h3>Reader Management</h3>
-                <p>Manage readers, add new readers, update reader information</p>
+                <h3>读者管理</h3>
+                <p>管理读者，添加新读者，更新读者信息</p>
             </a>
             <a href="${pageContext.request.contextPath}/borrow/list" class="menu-item">
-                <h3>Borrow Management</h3>
-                <p>Manage borrow records, borrow and return books</p>
+                <h3>借阅管理</h3>
+                <p>管理借阅记录，借书和还书</p>
             </a>
         </div>
     </div>

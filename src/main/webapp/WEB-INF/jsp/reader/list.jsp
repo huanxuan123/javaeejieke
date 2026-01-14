@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reader List</title>
+    <title>读者列表</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/common.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/common.js"></script>
@@ -119,40 +119,40 @@
     <div class="alert-container"></div>
     <div class="container">
         <div class="header">
-            <h1>Reader Management</h1>
+            <h1>读者管理</h1>
             <div>
-                <a href="${pageContext.request.contextPath}/" class="btn">Back to Home</a>
-                <a href="${pageContext.request.contextPath}/reader/add" class="btn btn-primary">Add Reader</a>
+                <a href="${pageContext.request.contextPath}/" class="btn">返回首页</a>
+                <a href="${pageContext.request.contextPath}/reader/add" class="btn btn-primary">添加读者</a>
             </div>
         </div>
 
         <form action="${pageContext.request.contextPath}/reader/search" method="get" class="search-form">
-            <input type="text" name="name" placeholder="Name" value="${name}">
-            <input type="text" name="studentNo" placeholder="Student No" value="${studentNo}">
-            <input type="text" name="department" placeholder="Department" value="${department}">
-            <button type="submit" class="btn btn-primary">Search</button>
+            <input type="text" name="name" placeholder="姓名" value="${name}">
+            <input type="text" name="studentNo" placeholder="学号" value="${studentNo}">
+            <input type="text" name="department" placeholder="院系" value="${department}">
+            <button type="submit" class="btn btn-primary">搜索</button>
         </form>
 
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Student No</th>
-                    <th>Name</th>
-                    <th>Gender</th>
-                    <th>Department</th>
-                    <th>Borrow Limit</th>
-                    <th>Borrowed</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>学号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>院系</th>
+                    <th>借阅限额</th>
+                    <th>已借数量</th>
+                    <th>状态</th>
+                    <th>操作</th>
                 </tr>
             </thead>
             <tbody>
                 <c:if test="${empty readerList}">
                     <tr>
                         <td colspan="9" class="empty-state">
-                            <i>No readers found</i>
-                            <p>Click "Add Reader" to add your first reader</p>
+                            <i>未找到读者</i>
+                            <p>点击"添加读者"添加您的第一个读者</p>
                         </td>
                     </tr>
                 </c:if>
@@ -167,16 +167,16 @@
                         <td>${reader.borrowedCount}</td>
                         <td>
                             <c:if test="${reader.status == 1}">
-                                <span class="status-badge status-active">Active</span>
+                                <span class="status-badge status-active">正常</span>
                             </c:if>
                             <c:if test="${reader.status == 0}">
-                                <span class="status-badge status-inactive">Inactive</span>
+                                <span class="status-badge status-inactive">禁用</span>
                             </c:if>
                         </td>
                         <td class="actions">
-                            <a href="${pageContext.request.contextPath}/reader/detail/${reader.readerId}" class="btn btn-success">View</a>
-                            <a href="${pageContext.request.contextPath}/reader/edit/${reader.readerId}" class="btn btn-primary">Edit</a>
-                            <button onclick="deleteReader(${reader.readerId})" class="btn btn-danger">Delete</button>
+                            <a href="${pageContext.request.contextPath}/reader/detail/${reader.readerId}" class="btn btn-success">查看</a>
+                            <a href="${pageContext.request.contextPath}/reader/edit/${reader.readerId}" class="btn btn-primary">编辑</a>
+                            <button onclick="deleteReader(${reader.readerId})" class="btn btn-danger">删除</button>
                         </td>
                     </tr>
                 </c:forEach>
@@ -187,22 +187,22 @@
     <script>
         $(document).ready(function() {
             function deleteReader(readerId) {
-                if (confirmAction('Are you sure you want to delete this reader?')) {
+                if (confirmAction('确定要删除这位读者吗？')) {
                     $.ajax({
                         url: contextPath + '/reader/delete/' + readerId,
                         type: 'POST',
                         success: function(response) {
                             if (response === 'success') {
-                                showMessage('Reader deleted successfully!', 'success');
+                                showMessage('读者删除成功！', 'success');
                                 setTimeout(function() {
                                     location.reload();
                                 }, 1000);
                             } else {
-                                showMessage('Failed to delete reader: ' + response, 'error');
+                                showMessage('删除读者失败：' + response, 'error');
                             }
                         },
                         error: function(xhr, status, error) {
-                            showMessage('Network error: ' + error, 'error');
+                            showMessage('网络错误：' + error, 'error');
                         }
                     });
                 }

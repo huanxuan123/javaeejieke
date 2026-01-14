@@ -238,6 +238,71 @@ jdbc.url=jdbc:mysql://localhost:3306/library_system?useUnicode=true&characterEnc
 2. 查看Console和Network标签
 3. 检查请求URL和参数
 
+### 问题7：访问系统出现404错误
+**原因分析**:
+1. Spring MVC配置问题
+2. Controller路径映射错误
+3. 视图解析器配置问题
+4. Tomcat部署问题
+
+**解决方案**:
+
+**方案一：检查访问路径**
+- 确认访问URL格式：`http://localhost:8080/javaeejieke/`
+- 首页访问：`http://localhost:8080/javaeejieke/`
+- 登录页面：`http://localhost:8080/javaeejieke/admin/login`
+- 测试页面：`http://localhost:8080/javaeejieke/test`
+
+**方案二：检查Controller映射**
+- 确认IndexController存在并正确配置
+- 检查@RequestMapping路径是否正确
+- 查看Tomcat启动日志是否有错误
+
+**方案三：检查Spring配置**
+- 确认spring-mvc.xml中视图解析器配置正确
+- prefix应为：`/WEB-INF/jsp/`
+- suffix应为：`.jsp`
+
+**方案四：检查Tomcat部署**
+- 确认WAR包是否正确部署
+- 查看Tomcat的webapps目录
+- 重启Tomcat服务器
+
+**方案五：使用测试页面**
+- 访问：`http://localhost:8080/javaeejieke/test`
+- 如果能看到测试页面，说明Spring MVC工作正常
+- 检查页面显示的Context Path信息
+
+**方案六：查看Tomcat日志**
+- 查看：`logs/catalina.out`
+- 查找Spring初始化错误
+- 查找Controller注册错误
+
+**常见404原因及解决**:
+
+1. **访问路径错误**
+   - 错误：`http://localhost:8080/`（缺少项目名）
+   - 正确：`http://localhost:8080/javaeejieke/`
+
+2. **Controller未扫描到**
+   - 检查：`spring-mvc.xml`中的component-scan配置
+   - 应为：`<context:component-scan base-package="com.library.controller" />`
+
+3. **视图文件不存在**
+   - 检查：`WEB-INF/jsp/`目录下是否有对应的JSP文件
+   - 例如：`index.jsp`、`admin/login.jsp`
+
+4. **静态资源404**
+   - 检查：`spring-mvc.xml`中是否配置了静态资源映射
+   - 应为：`<mvc:resources mapping="/static/**" location="/static/" />`
+
+**调试步骤**:
+1. 访问测试页面：`http://localhost:8080/javaeejieke/test`
+2. 查看Tomcat控制台输出
+3. 检查浏览器开发者工具的Network标签
+4. 确认请求的URL和响应状态码
+5. 查看Spring初始化日志
+
 ---
 
 ## 开发调试

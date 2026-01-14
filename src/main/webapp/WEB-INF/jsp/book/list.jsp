@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book List</title>
+    <title>图书列表</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/common.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/common.js"></script>
@@ -119,44 +119,44 @@
     <div class="alert-container"></div>
     <div class="container">
         <div class="header">
-            <h1>Book Management</h1>
+            <h1>图书管理</h1>
             <div>
-                <a href="${pageContext.request.contextPath}/" class="btn">Back to Home</a>
-                <a href="${pageContext.request.contextPath}/book/add" class="btn btn-primary">Add Book</a>
+                <a href="${pageContext.request.contextPath}/" class="btn">返回首页</a>
+                <a href="${pageContext.request.contextPath}/book/add" class="btn btn-primary">添加图书</a>
             </div>
         </div>
 
         <form action="${pageContext.request.contextPath}/book/search" method="get" class="search-form">
-            <input type="text" name="title" placeholder="Title" value="${title}">
-            <input type="text" name="author" placeholder="Author" value="${author}">
-            <input type="text" name="category" placeholder="Category" value="${category}">
+            <input type="text" name="title" placeholder="书名" value="${title}">
+            <input type="text" name="author" placeholder="作者" value="${author}">
+            <input type="text" name="category" placeholder="分类" value="${category}">
             <select name="status">
-                <option value="">All Status</option>
-                <option value="1" ${status == 1 ? 'selected' : ''}>Available</option>
-                <option value="0" ${status == 0 ? 'selected' : ''}>Unavailable</option>
+                <option value="">全部状态</option>
+                <option value="1" ${status == 1 ? 'selected' : ''}>可借</option>
+                <option value="0" ${status == 0 ? 'selected' : ''}>不可借</option>
             </select>
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="submit" class="btn btn-primary">搜索</button>
         </form>
 
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Stock</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>书名</th>
+                    <th>作者</th>
+                    <th>分类</th>
+                    <th>价格</th>
+                    <th>库存</th>
+                    <th>状态</th>
+                    <th>操作</th>
                 </tr>
             </thead>
             <tbody>
                 <c:if test="${empty bookList}">
                     <tr>
                         <td colspan="8" class="empty-state">
-                            <i>No books found</i>
-                            <p>Click "Add Book" to add your first book</p>
+                            <i>未找到图书</i>
+                            <p>点击"添加图书"添加您的第一本图书</p>
                         </td>
                     </tr>
                 </c:if>
@@ -170,16 +170,16 @@
                         <td>${book.availableStock}/${book.totalStock}</td>
                         <td>
                             <c:if test="${book.status == 1}">
-                                <span class="status-badge status-available">Available</span>
+                                <span class="status-badge status-available">可借</span>
                             </c:if>
                             <c:if test="${book.status == 0}">
-                                <span class="status-badge status-unavailable">Unavailable</span>
+                                <span class="status-badge status-unavailable">不可借</span>
                             </c:if>
                         </td>
                         <td class="actions">
-                            <a href="${pageContext.request.contextPath}/book/detail/${book.bookId}" class="btn btn-success">View</a>
-                            <a href="${pageContext.request.contextPath}/book/edit/${book.bookId}" class="btn btn-primary">Edit</a>
-                            <button onclick="deleteBook(${book.bookId})" class="btn btn-danger">Delete</button>
+                            <a href="${pageContext.request.contextPath}/book/detail/${book.bookId}" class="btn btn-success">查看</a>
+                            <a href="${pageContext.request.contextPath}/book/edit/${book.bookId}" class="btn btn-primary">编辑</a>
+                            <button onclick="deleteBook(${book.bookId})" class="btn btn-danger">删除</button>
                         </td>
                     </tr>
                 </c:forEach>
@@ -190,22 +190,22 @@
     <script>
         $(document).ready(function() {
             function deleteBook(bookId) {
-                if (confirmAction('Are you sure you want to delete this book?')) {
+                if (confirmAction('确定要删除这本书吗？')) {
                     $.ajax({
                         url: contextPath + '/book/delete/' + bookId,
                         type: 'POST',
                         success: function(response) {
                             if (response === 'success') {
-                                showMessage('Book deleted successfully!', 'success');
+                                showMessage('图书删除成功！', 'success');
                                 setTimeout(function() {
                                     location.reload();
                                 }, 1000);
                             } else {
-                                showMessage('Failed to delete book: ' + response, 'error');
+                                showMessage('删除图书失败：' + response, 'error');
                             }
                         },
                         error: function(xhr, status, error) {
-                            showMessage('Network error: ' + error, 'error');
+                            showMessage('网络错误：' + error, 'error');
                         }
                     });
                 }

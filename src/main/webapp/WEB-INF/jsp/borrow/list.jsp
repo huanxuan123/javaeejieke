@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Borrow Record List</title>
+    <title>借阅记录列表</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/common.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/common.js"></script>
@@ -106,10 +106,10 @@
     <div class="alert-container"></div>
     <div class="container">
         <div class="header">
-            <h1>Borrow Record Management</h1>
+            <h1>借阅管理</h1>
             <div>
-                <a href="${pageContext.request.contextPath}/" class="btn">Back to Home</a>
-                <a href="${pageContext.request.contextPath}/borrow/borrow" class="btn btn-primary">Borrow Book</a>
+                <a href="${pageContext.request.contextPath}/" class="btn">返回首页</a>
+                <a href="${pageContext.request.contextPath}/borrow/borrow" class="btn btn-primary">借书</a>
             </div>
         </div>
 
@@ -117,21 +117,21 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Reader</th>
-                    <th>Book</th>
-                    <th>Borrow Date</th>
-                    <th>Due Date</th>
-                    <th>Return Date</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>读者</th>
+                    <th>图书</th>
+                    <th>借阅日期</th>
+                    <th>应还日期</th>
+                    <th>归还日期</th>
+                    <th>状态</th>
+                    <th>操作</th>
                 </tr>
             </thead>
             <tbody>
                 <c:if test="${empty recordList}">
                     <tr>
                         <td colspan="8" class="empty-state">
-                            <i>No borrow records found</i>
-                            <p>Click "Borrow Book" to create your first borrow record</p>
+                            <i>未找到借阅记录</i>
+                            <p>点击"借书"创建您的第一条借阅记录</p>
                         </td>
                     </tr>
                 </c:if>
@@ -145,18 +145,18 @@
                         <td>${record.returnDate}</td>
                         <td>
                             <c:if test="${record.status == 1}">
-                                <span class="status-badge status-borrowing">Borrowing</span>
+                                <span class="status-badge status-borrowing">借阅中</span>
                             </c:if>
                             <c:if test="${record.status == 2}">
-                                <span class="status-badge status-returned">Returned</span>
+                                <span class="status-badge status-returned">已归还</span>
                             </c:if>
                             <c:if test="${record.status == 3}">
-                                <span class="status-badge status-overdue">Overdue</span>
+                                <span class="status-badge status-overdue">逾期</span>
                             </c:if>
                         </td>
                         <td>
                             <c:if test="${record.status == 1}">
-                                <button onclick="returnBook(${record.recordId})" class="btn btn-success">Return</button>
+                                <button onclick="returnBook(${record.recordId})" class="btn btn-success">还书</button>
                             </c:if>
                         </td>
                     </tr>
@@ -168,22 +168,22 @@
     <script>
         $(document).ready(function() {
             function returnBook(recordId) {
-                if (confirmAction('Are you sure you want to return this book?')) {
+                if (confirmAction('确定要归还这本书吗？')) {
                     $.ajax({
                         url: contextPath + '/borrow/return/' + recordId,
                         type: 'POST',
                         success: function(response) {
                             if (response === 'success') {
-                                showMessage('Book returned successfully!', 'success');
+                                showMessage('图书归还成功！', 'success');
                                 setTimeout(function() {
                                     location.reload();
                                 }, 1000);
                             } else {
-                                showMessage('Failed to return book: ' + response, 'error');
+                                showMessage('归还图书失败：' + response, 'error');
                             }
                         },
                         error: function(xhr, status, error) {
-                            showMessage('Network error: ' + error, 'error');
+                            showMessage('网络错误：' + error, 'error');
                         }
                     });
                 }
