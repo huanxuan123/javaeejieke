@@ -1,5 +1,3 @@
-var contextPath = '${pageContext.request.contextPath}';
-
 function ajaxRequest(url, method, data, successCallback, errorCallback) {
     $.ajax({
         url: contextPath + url,
