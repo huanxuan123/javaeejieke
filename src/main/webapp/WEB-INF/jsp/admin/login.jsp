@@ -30,6 +30,7 @@
                     url: contextPath + '/admin/login',
                     type: 'POST',
                     data: formData,
+                    dataType: 'text',
                     success: function(response) {
                         if (response === 'success') {
                             showMessage('登录成功！正在跳转...', 'success');
@@ -41,7 +42,16 @@
                         }
                     },
                     error: function(xhr, status, error) {
-                        showMessage('网络错误：' + error, 'error');
+                        console.error('Login error:', xhr, status, error);
+                        var errorMsg = '网络错误：' + error;
+                        if (xhr.status === 0) {
+                            errorMsg = '无法连接到服务器，请检查网络或服务器状态';
+                        } else if (xhr.status === 500) {
+                            errorMsg = '服务器内部错误，请稍后重试';
+                        } else if (xhr.status === 404) {
+                            errorMsg = '请求的资源不存在';
+                        }
+                        showMessage(errorMsg, 'error');
                     }
                 });
             });
