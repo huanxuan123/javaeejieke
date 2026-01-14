@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.dao.AdminMapper">
+
+    <resultMap id="AdminResultMap" type="Admin">
+        <id property="adminId" column="admin_id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="AdminResultMap">
+        SELECT * FROM admin WHERE admin_id = #{adminId}
+    </select>
+
+    <select id="selectByUsername" resultMap="AdminResultMap">
+        SELECT * FROM admin WHERE username = #{username}
+    </select>
+
+    <select id="login" resultMap="AdminResultMap">
+        SELECT * FROM admin WHERE username = #{username} AND password = #{password}
+    </select>
+
+    <select id="selectAll" resultMap="AdminResultMap">
+        SELECT * FROM admin ORDER BY admin_id
+    </select>
+
+    <insert id="insert" parameterType="Admin" useGeneratedKeys="true" keyProperty="adminId">
+        INSERT INTO admin (username, password, name, phone)
+        VALUES (#{username}, #{password}, #{name}, #{phone})
+    </insert>
+
+    <update id="update" parameterType="Admin">
+        UPDATE admin
+        <set>
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+        </set>
+        WHERE admin_id = #{adminId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM admin WHERE admin_id = #{adminId}
+    </delete>
+
+</mapper>
